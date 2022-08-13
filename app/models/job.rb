@@ -1,11 +1,9 @@
 class Job < ApplicationRecord
+  extend FriendlyId
+
   has_many :job_applications, dependent: :destroy
-  before_save :generate_slug
-  validates :slug, uniqueness: true
-
-  # Has status: open, closed, draft
-
-  def generate_slug
-    self.slug = title
-  end
+  friendly_id :title, use: :slugged
+  validates :slug, uniqueness: true, presence: true
+  validates :status, presence: true
+  enum status: { open: 0, closed: 1, draft: 2 }
 end

@@ -94,6 +94,8 @@ GEM
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
     ffi (1.15.4)
+    friendly_id (5.4.2)
+      activerecord (>= 4.0.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.8.11)
@@ -124,6 +126,8 @@ GEM
       pry (>= 0.10.4)
     puma (5.5.2)
       nio4r (~> 2.0)
+    pundit (2.2.0)
+      activesupport (>= 3.0.0)
     racc (1.6.0)
     rack (2.2.3)
     rack-test (1.1.0)
@@ -200,6 +204,7 @@ GEM
 PLATFORMS
   arm64-darwin-21
   x86_64-darwin-19
+  x86_64-darwin-21
 
 DEPENDENCIES
   bootsnap (>= 1.4.4)
@@ -207,9 +212,11 @@ DEPENDENCIES
   devise_token_auth
   factory_bot_rails
   faker!
+  friendly_id
   listen (~> 3.3)
   pry-rails
   puma (~> 5.0)
+  pundit (~> 2.2)
   rails (~> 6.1.4, >= 6.1.4.3)
   rspec-rails
   spring

@@ -1,21 +1,26 @@
 class JobApplicationsController < ApplicationController
   before_action :set_job_application, only: [:show, :update, :destroy]
+  # before_action :authenticate_user!
 
   # GET /job_applications
   def index
-    @job_applications = JobApplication.all
+    @job_applications = current_user.job_application.all
+    authorize @job_applications
 
     render json: @job_applications
   end
 
   # GET /job_applications/1
   def show
+    authorize @job_applications
+
     render json: @job_application
   end
 
   # POST /job_applications
   def create
     @job_application = JobApplication.new(job_application_params)
+    # authorize @job_applications
 
     if @job_application.save
       render json: @job_application, status: :created, location: @job_application
@@ -26,6 +31,7 @@ class JobApplicationsController < ApplicationController
 
   # PATCH/PUT /job_applications/1
   def update
+    authorize @job_applications
     if @job_application.update(job_application_params)
       render json: @job_application
     else
@@ -35,7 +41,12 @@ class JobApplicationsController < ApplicationController
 
   # DELETE /job_applications/1
   def destroy
-    @job_application.destroy
+    authorize @job_applications
+    @job_applications.withdrawn!
+
+    render json: @job_applications
+  rescue ActiveRecord::RecordInvalid => e
+    rendor json: e.to_json, status: :unprocessable_entity
   end
 
   private

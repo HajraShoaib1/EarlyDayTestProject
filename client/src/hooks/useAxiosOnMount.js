@@ -21,7 +21,7 @@ const useAxiosOnMount = (url) => {
       setLoading(false)
     }
   };
-  
+
   return{ data: data, setDate: setData, error: error, loading: loading};
 };
 

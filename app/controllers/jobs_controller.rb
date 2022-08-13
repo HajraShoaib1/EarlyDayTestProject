@@ -1,21 +1,26 @@
 class JobsController < ApplicationController
   before_action :set_job, only: %i[show update destroy]
+  before_action :authenticate_user!, except: [:index, :show]
 
   # GET /jobs
   def index
-    @jobs = Job.all
+    @jobs = Job.open
+    authorize @jobs
 
     render json: @jobs
   end
 
   # GET /jobs/1
   def show
+    authorize @job
+
     render json: @job
   end
 
   # POST /jobs
   def create
     @job = Job.new(job_params)
+    authorize @job
 
     if @job.save
       render json: @job, status: :created, location: @job
@@ -26,6 +31,7 @@ class JobsController < ApplicationController
 
   # PATCH/PUT /jobs/1
   def update
+    authorize @job
     if @job.update(job_params)
       render json: @job
     else
@@ -35,6 +41,7 @@ class JobsController < ApplicationController
 
   # DELETE /jobs/1
   def destroy
+    authorize @job
     @job.destroy
   end
 
